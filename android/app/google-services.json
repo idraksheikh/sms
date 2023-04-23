@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "837645621098",
+    "project_id": "school-sms42",
+    "storage_bucket": "school-sms42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:837645621098:android:151c8190f38b1e8e233713",
+        "android_client_info": {
+          "package_name": "com.example.sms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "837645621098-5vua30jbevv1n4lbj63vkejvnjvvpps5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhRHY1OoKDsHzIVjyJG3D5TLrZ3O_cjCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "837645621098-5vua30jbevv1n4lbj63vkejvnjvvpps5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
