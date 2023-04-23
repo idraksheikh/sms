@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:sms/Screens/assigments/Assignment_upload.dart';
-import 'package:sms/Screens/fee_information.dart';
+import 'package:sms/Screens/home/assigments/Assignment_upload.dart';
+import 'package:sms/Screens/home/fees/fee_information.dart';
 import 'package:sms/Screens/forms.dart';
 import 'package:sms/Screens/home/home_page.dart';
 import 'package:sms/Screens/home/attendance/attendance.dart';
 import 'package:sms/Screens/home/profile/profile.dart';
 import 'package:sms/Screens/intro/intro.dart';
-import 'package:sms/Screens/intro/login_page.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sms/Screens/wrapper.dart';
 import 'package:sms/Services/Common.dart';
+
+import 'Screens/authentication/login_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
