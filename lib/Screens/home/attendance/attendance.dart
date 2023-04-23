@@ -1,11 +1,18 @@
+import 'package:calendar_agenda/calendar_agenda.dart';
+
 import 'package:flutter/material.dart';
 import 'package:sms/Screens/home/attendance/total.dart';
-import 'package:sms/Screens/styles/font.dart';
-import 'package:table_calendar/table_calendar.dart';
+import '../../styles/font.dart';
 
-class Attendance extends StatelessWidget {
+class Attendance extends StatefulWidget {
   const Attendance({Key? key}) : super(key: key);
 
+  @override
+  State<Attendance> createState() => _AttendanceState();
+}
+
+class _AttendanceState extends State<Attendance> {
+  // DateRange? selectedDateRange;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,34 +27,41 @@ class Attendance extends StatelessWidget {
                   color: Colors.blue,
                   width: MediaQuery.of(context).size.width,
                   padding: const EdgeInsets.only(top: 15, bottom: 15),
-                  child: Center(child: Text('Attendance', style: ThemeFontStyle(fontSize: 22, color: Colors.black).style,)),
+                  child: Center(
+                      child: Text(
+                    'Attendance',
+                    style:
+                        ThemeFontStyle(fontSize: 22, color: Colors.black).style,
+                  )),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: const BoxDecoration(
-                      gradient:
-                          LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [Colors.blue, Colors.white]),
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [Colors.blue, Colors.white]),
                       borderRadius: BorderRadius.only(
                           bottomRight: Radius.circular(30),
                           bottomLeft: Radius.circular(30))),
                   child: Card(
                     elevation: 3,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-                    margin: const EdgeInsets.only(left: 15, right: 15),
-                    child: TableCalendar(
-                      firstDay: DateTime.utc(2010, 10, 16),
-                      lastDay: DateTime.utc(2030, 3, 14),
-                      focusedDay: DateTime.now(),
-                      rowHeight: 45,
-                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24)),
+                    // margin: const EdgeInsets.only(left: 15, right: 15),
+                    child: CalendarAgenda(
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now().subtract(const Duration(days: 140)),
+                      lastDate: DateTime.now().add(const Duration(days: 4)),
+                      padding: 15,
+                      onDateSelected: (date) {
+                        print(date);
+                      },
+                    )
                   ),
                 ),
               ],
             ),
-
             Card(
               elevation: 3,
               shape: RoundedRectangleBorder(
@@ -83,8 +97,11 @@ class Attendance extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: const [
-                Total(),
-                Total(),
+                Total(
+                    heading: 'Present',
+                    colors: Color.fromRGBO(254, 58, 144, 1)),
+                Total(
+                    heading: 'Absent', colors: Color.fromRGBO(1, 214, 255, 1)),
               ],
             ),
           ],
