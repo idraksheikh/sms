@@ -1,7 +1,11 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-// import 'package:modernlogintute/Screens/login_page.dart';
+
+// final storageRef = FirebaseStorage.instance.ref();
+// final mountainsRef = storageRef.child("mountains.jpg");
 
 class AssignmentUpload extends StatefulWidget {
   const AssignmentUpload({Key? key}) : super(key: key);
@@ -11,8 +15,22 @@ class AssignmentUpload extends StatefulWidget {
 }
 
 class AssignmentUploadState extends State<AssignmentUpload> {
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+
+  Future<String?> uploadPdf(String fileName, File file) async {
+    final reference =
+        FirebaseStorage.instance.ref().child("assignments/$fileName.pdf");
+
+    final uploadTask = reference.putFile(file);
+
+    await uploadTask.whenComplete(() {});
+
+    final downloadLink = await reference.getDownloadURL();
+
+    return downloadLink;
+  }
+
   FilePickerResult? result;
-  String? _fileName;
   PlatformFile? pickedfile;
   bool isLoading = false;
   File? fileToDisplay;
@@ -23,17 +41,24 @@ class AssignmentUploadState extends State<AssignmentUpload> {
         isLoading = true;
       });
 
-      result = await FilePicker.platform.pickFiles(
-        type: FileType.any,
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf'],
         allowMultiple: false,
       );
 
       if (result != null) {
-        _fileName = result!.files.first.name;
-        pickedfile = result!.files.first;
+        String fileName = result.files[0].name;
+        File file = File(result.files[0].path!);
+        pickedfile = result.files.first;
         fileToDisplay = File(pickedfile!.path.toString());
+        final downloadLink = uploadPdf(fileName, file);
+        await _firebaseFirestore.collection("assignments").add({
+          "name": fileName,
+          "url": downloadLink,
+        });
 
-        print('File name $_fileName');
+        print("PDF uploaded succesfully");
       }
 
       setState(() {
@@ -79,8 +104,8 @@ class AssignmentUploadState extends State<AssignmentUpload> {
           ElevatedButton(
               // style:ButtonStyle(backgroundColor: MaterialStateProperty(Colors.accents),),
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/home');
-                print("pressed");
+                // Navigator.pushReplacementNamed(context, '/home');
+                pickFile();
               },
               child: Text('Submit')),
         ],
