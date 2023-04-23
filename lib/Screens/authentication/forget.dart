@@ -50,17 +50,6 @@ class Forget extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 10),
-
-                  // password textfield
-                  MyTextField(
-                    controller: passwordController,
-                    hintText: 'Old Password',
-                    obscureText: true,
-                    name:'Old Password',
-                  ),
-
-                  const SizedBox(height: 10),
-
                   MyTextField(
                     controller: passwordController1,
                     hintText: 'New Password',
@@ -68,7 +57,6 @@ class Forget extends StatelessWidget {
                     name: 'New Password',
                   ),
                   const SizedBox(height: 10),
-
                   MyTextField(
                     controller: passwordController2,
                     hintText: 'Confirm Password',
@@ -78,6 +66,7 @@ class Forget extends StatelessWidget {
                   const SizedBox(height: 10),
 
                   ElevatedButton(
+                    
                       //style:ButtonStyle(backgroundColor: MaterialStateProperty(color:Colors.accents),),
                       onPressed: () {
                         Navigator.pushReplacementNamed(context, '/login');

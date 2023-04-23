@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sms/Services/common.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -70,19 +71,23 @@ class _ProfileState extends State<Profile> {
           const SizedBox(
             height: 10,
           ),
-          infoBox(context, 'First Name', 'Gurpreet Singh '),
+          infoBox(context, 'Registration Id', Common.student!.registration_id),
           const SizedBox(
             height: 10,
           ),
-          infoBox(context, 'Last Name', 'Bhatia'),
+          infoBox(context, 'Full Name', Common.student!.name),
           const SizedBox(
             height: 10,
           ),
-          infoBox(context, 'Phone Number', '+91 9993130012'),
+          infoBox(context, 'Class', Common.student!.standard),
           const SizedBox(
             height: 10,
           ),
-          infoBox(context, 'Address', '24 , IT Park Colony Indore M.P.'),
+          infoBox(context, 'Phone Number', Common.student!.mobile),
+          const SizedBox(
+            height: 10,
+          ),
+          infoBox(context, 'Address', Common.student!.address),
         ],
       ),
     );

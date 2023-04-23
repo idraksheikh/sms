@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms/Model/Admin.dart';
 import 'package:sms/Model/student.dart';
 import 'package:sms/Model/teacher.dart';
+import 'package:sms/Services/common.dart';
 
 class Authentication {
   Future<bool> login(String registrationId, String password) async {
@@ -23,6 +24,7 @@ class Authentication {
                 await SharedPreferences.getInstance();
             preference.setString('registrationId', students.registration_id!);
             preference.setString('password', students.password!);
+            Common.student=students;
             Fluttertoast.showToast(msg: "Login Successfull");
             return true;
           }else {
