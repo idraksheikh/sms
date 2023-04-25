@@ -1,3 +1,4 @@
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms/Model/student.dart';
 
@@ -15,7 +16,12 @@ class Common {
       return false;
     }
   }
-
+  static Future<bool> checkUserLogin() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    if (preferences.getString('registration_id') != '') return true;
+    return false;
+    }
+  
    setStudents(Students? students) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString('address', students!.address ?? '');
@@ -28,6 +34,18 @@ class Common {
     preferences.setString('year_of_joining', students.year_of_joining ?? '');
   }
 
+LogoutStudent() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('address','');
+    preferences.setString('standard','');
+    preferences.setString('dob','');
+    preferences.setString('mobile','');
+    preferences.setString('name','');
+    preferences.setString('password','');
+    preferences.setString('registration_id','');
+    preferences.setString('year_of_joining','');
+    
+  }
    Future<Students> getStudents() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     Students students = Students();

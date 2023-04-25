@@ -61,6 +61,7 @@ class _SMSState extends State<SMS> {
                   'feeInfo': (context) => const FeeInformation(),
                   '/assignment': (context) => const AssignmentUpload(),
                   '/attendance': (context) => const Attendance(),
+                  '/wrapper': (context) => const Wrapper(),
                 },
               );
             } else {
@@ -75,6 +76,7 @@ class _SMSState extends State<SMS> {
                   'feeInfo': (context) => const FeeInformation(),
                   '/assignment': (context) => const AssignmentUpload(),
                   '/attendance': (context) => const Attendance(),
+                  '/wrapper': (context) => const Wrapper(),
                 },
               );
             }
