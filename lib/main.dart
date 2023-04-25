@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sms/Screens/home/assigments/Assignment_upload.dart';
+import 'package:sms/Screens/home/assigments/assignment_upload.dart';
 import 'package:sms/Screens/home/fees/fee_information.dart';
 import 'package:sms/Screens/forms.dart';
 import 'package:sms/Screens/home/home_page.dart';
