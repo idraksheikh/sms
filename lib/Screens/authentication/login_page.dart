@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
       if (await _auth.login(registrationId, password)) {
         Navigator.pushReplacementNamed(
           context,
-          '/home',
+          '/wrapper',
         );
       }
     }

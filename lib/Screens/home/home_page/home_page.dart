@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms/Screens/widgets/attendance_card.dart';
 import 'package:sms/Screens/widgets/cards.dart';
 import 'package:sms/Screens/widgets/profileimage.dart';
@@ -15,6 +16,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String? name=' ';
+  void getName() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      name = pref.getString('name');
+      name=name!.split(' ')[0];
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getName();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, top: 15),
                           child: Text(
-                            'Welcome, Gurpreet',
+                            'Welcome, $name',
                             style: GoogleFonts.lato(
                               textStyle: const TextStyle(
                                 fontSize: 16,
@@ -60,8 +77,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         const Space(height: 10),
                       ]),
-                  const Space(width: 25,),
-                  const ProfileCard(imgSrc: 'gurpreet_singh_bhatia.jpg', routeName: '/profile',),
+                  const Space(
+                    width: 25,
+                  ),
+                  const ProfileCard(
+                    imgSrc: 'gurpreet_singh_bhatia.jpg',
+                    routeName: '/profile',
+                  ),
                 ],
               ),
               const Center(child: AttendanceCard(routeName: '/attendance')),
@@ -141,5 +163,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  
   }
 }

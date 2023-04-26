@@ -9,6 +9,7 @@ class Teachers {
 
   Teachers({
     this.address,
+    this.subject,
     this.mobile,
     this.name,
     this.password,
@@ -17,6 +18,7 @@ class Teachers {
   });
   Teachers.fromJson(Map<String, dynamic> json) {
     address = json['address'];
+    subject=json['subject'];
     mobile = json['mobile'];
     name = json['name'];
     password = json['password'];
@@ -26,6 +28,7 @@ class Teachers {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['address'] = address;
+    data['subject']=subject;
     data['mobile'] = mobile;
     data['name'] = name;
     data['password'] = password;
