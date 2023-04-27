@@ -117,11 +117,9 @@ class AssignmentFolderState extends State<AssignmentFolder> {
                   itemBuilder: (context, index) {
                     return AddClass(
                       icon: Icons.folder_copy_outlined,
-                      // url: pdfData[index]['url'],
                       className: classes[index].name,
                       heading: classes[index].name,
                     );
-                    //  AssignmentCard(icon: Icons.picture_as_pdf_outlined, url: pdfData[index]['url'], heading: pdfData[index]['name'],)
                   }),
             ),
           ),
