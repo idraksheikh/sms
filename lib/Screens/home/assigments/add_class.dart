@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:sms/Screens/home/assigments/assignment_upload.dart';
 import 'package:sms/Screens/styles/font.dart';
 
 class AddClass extends StatelessWidget {
   final IconData icon;
   final String heading;
+  final String className;
 
   const AddClass({
     Key? key,
     required this.icon,
     this.heading = 'Heading',
+    required this.className,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      // onTap: () {
-      //   Navigator.of(context).push(
-      //       MaterialPageRoute(builder: (context) => AssignmentCard(icon: icon, url: url)));
-      // //    PdfViewer(pdfUrl: url)
-      // },
+      onTap: () {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => AssignmentUpload(classes: className,)));
+      //    PdfViewer(pdfUrl: url)
+      },
       // overlayColor: MaterialStateProperty.all(Colors.cyan),
       focusColor: Colors.white,
       borderRadius: BorderRadius.circular(24),

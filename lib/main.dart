@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sms/Screens/home/assigments/assignment_upload.dart';
+import 'package:sms/Screens/home/assigments/assignment_class_folder.dart';
 import 'package:sms/Screens/home/fees/fee_information.dart';
 import 'package:sms/Screens/forms.dart';
 import 'package:sms/Screens/home/home_page.dart';
@@ -59,7 +59,7 @@ class _SMSState extends State<SMS> {
                   '/login': (context) => LoginPage(),
                   '/profile': (context) => const Profile(),
                   'feeInfo': (context) => const FeeInformation(),
-                  '/assignment': (context) => const AssignmentUpload(),
+                  '/assignment_class': (context) => const AssignmentFolder(),
                   '/attendance': (context) => const Attendance(),
                   '/wrapper': (context) => const Wrapper(),
                 },
@@ -74,7 +74,7 @@ class _SMSState extends State<SMS> {
                   '/login': (context) => LoginPage(),
                   '/profile': (context) => const Profile(),
                   'feeInfo': (context) => const FeeInformation(),
-                  '/assignment': (context) => const AssignmentUpload(),
+                  '/assignment_class': (context) => const AssignmentFolder(),
                   '/attendance': (context) => const Attendance(),
                   '/wrapper': (context) => const Wrapper(),
                 },

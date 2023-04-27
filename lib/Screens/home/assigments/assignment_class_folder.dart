@@ -1,14 +1,9 @@
-import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:sms/Screens/home/assigments/add_class.dart';
 import 'package:sms/Screens/styles/font.dart';
 import 'package:sms/Screens/widgets/spacer.dart';
 
-// final storageRef = FirebaseStorage.instance.ref();
-// final mountainsRef = storageRef.child("mountains.jpg");
 
 class AssignmentFolder extends StatefulWidget {
   const AssignmentFolder({Key? key}) : super(key: key);
@@ -18,51 +13,80 @@ class AssignmentFolder extends StatefulWidget {
 }
 
 class AssignmentFolderState extends State<AssignmentFolder> {
-  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   List<Map<String, dynamic>> pdfData = [];
-  List<String> className = [];
-  int index = 0;
+  List classes = [];
+  final TextEditingController _textFieldController = TextEditingController();
 
-  Future<String?> uploadPdf(String fileName, File file) async {
-    final reference =
-    FirebaseStorage.instance.ref().child("assignments/$fileName.pdf");
-    final uploadTask = reference.putFile(file);
-    await uploadTask.whenComplete(() {});
-    final downloadLink = await reference.getDownloadURL();
-    await _firebaseFirestore.collection("Assignments/$className").add({
-      "name": fileName,
-      "url": downloadLink,
-    });
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Enter the Class',
+            style: ThemeFontStyle(fontSize: 18).style,
+          ),
+          content: TextField(
+            onChanged: (value) {
+              setState(() {
+                // className = value;
+              });
+            },
+            controller: _textFieldController,
+            decoration: InputDecoration(
+                hintText: "Eg. Class I",
+                hintStyle:
+                ThemeFontStyle(fontSize: 14, fontWeight: FontWeight.normal)
+                    .style),
+          ),
+          actions: <Widget>[
+            OutlinedButton(
+              child: Text(
+                'Cancel',
+                style: ThemeFontStyle(fontSize: 14, color: Colors.blue).style,
+              ),
+              onPressed: () {
+                setState(() {
+                  Navigator.pop(context);
+                });
+              },
+            ),
+            OutlinedButton(
+              child: Text(
+                'Create',
+                style: ThemeFontStyle(fontSize: 14, color: Colors.blue).style,
+              ),
+              onPressed: () {
+                createClass(_textFieldController.text);
+                setState(() {
+                  Navigator.pop(context);
+                });
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<String?> createClass(String name) async {
+    final reference = FirebaseStorage.instance.ref().child(("Assignments/$name/.initialise"));
+    final created = reference.putString('.initialise');
+    await created.whenComplete(() => getAllDocuments());
     return null;
   }
 
-  FilePickerResult? result;
-  PlatformFile? pickedfile;
-  bool isLoading = false;
-  File? fileToDisplay;
 
-  void pickFile() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf'],
-    );
-
-    if (result != null) {
-      String fileName = result.files[0].name;
-      File file = File(result.files[0].path!);
-      uploadPdf(fileName, file);
-    }
-  }
-
-  Future getAllPdf() async {
-    final results = await _firebaseFirestore.collection("Assignments/$className").get();
-    pdfData = results.docs.map((e) => e.data()).toList();
+  Future getAllDocuments() async {
+    final results = await FirebaseStorage.instance.ref('Assignments').listAll();
+    classes = results.prefixes;
     setState(() {});
   }
 
   @override
   void initState() {
-    getAllPdf();
+    getAllDocuments();
     super.initState();
   }
 
@@ -70,31 +94,33 @@ class AssignmentFolderState extends State<AssignmentFolder> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Assignment Upload"),
+        title: Text("All Classes", style: ThemeFontStyle(fontSize: 20, color: Colors.white).style,),
         titleSpacing: 00.0,
         centerTitle: true,
         toolbarHeight: 60.2,
         toolbarOpacity: 0.8,
-        // shape: const RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.only(
-        //       bottomRight: Radius.circular(50),
-        //       bottomLeft: Radius.circular(50)),
-        // ),
         elevation: 0.00,
         backgroundColor: const Color.fromARGB(255, 114, 203, 245),
       ),
       body: Column(
         children: [
+          const Space(height: 10,),
           Expanded(
             child: RefreshIndicator(
-              onRefresh: (){
-                return getAllPdf();
+              onRefresh: () {
+                return getAllDocuments();
               },
               child: GridView.builder(
-                  itemCount: className.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                  itemCount: classes.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
                   itemBuilder: (context, index) {
-                    return AddClass(icon: Icons.folder_copy_outlined, heading: className[index]);
+                    return AddClass(
+                      icon: Icons.folder_copy_outlined,
+                      // url: pdfData[index]['url'],
+                      className: classes[index].name,
+                      heading: classes[index].name,
+                    );
                     //  AssignmentCard(icon: Icons.picture_as_pdf_outlined, url: pdfData[index]['url'], heading: pdfData[index]['name'],)
                   }),
             ),
@@ -115,10 +141,7 @@ class AssignmentFolderState extends State<AssignmentFolder> {
               ),
               child: OutlinedButton(
                   onPressed: () {
-                    setState(() {
-                      index ++;
-                      className.add('Class IV');
-                    });
+                    _showMyDialog();
                   },
                   child: Text(
                     'Add Class',
