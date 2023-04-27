@@ -46,9 +46,6 @@ class Authentication {
                 : null);
         if (teachers != null) {
           if (teachers.password == password) {
-            SharedPreferences preference =
-                await SharedPreferences.getInstance();
-            
                 await _common.setTeachers(teachers);
             Fluttertoast.showToast(msg: "Login Successfull");
             return true;
@@ -88,7 +85,7 @@ class Authentication {
       Fluttertoast.showToast(msg: "Not Done.");
       return false;
     } catch (e) {
-      print(e.toString());
+      print(e);
       Fluttertoast.showToast(msg: e.toString());
       return false;
     }

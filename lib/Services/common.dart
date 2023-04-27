@@ -25,6 +25,7 @@ class Common {
     print("Not Login Or Logout.");
     return false;
   }
+
   // Check the User ...
   static Future<String> checkUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -35,6 +36,7 @@ class Common {
     }
     return 'AD';
   }
+
   // Set Student After Login...
   setStudents(Students? students) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -58,6 +60,13 @@ class Common {
     preferences.setString('password', teachrs.password ?? '');
     preferences.setString('registration_id', teachrs.registration_id ?? '');
     preferences.setString('year_of_joining', teachrs.year_of_joining ?? '');
+    String tempClasses = "";
+    if (teachrs.classes != null) {
+      for (int i = 0; i < teachrs.classes!.length; i++) {
+        tempClasses += "${teachrs.classes![i]} ";
+      }
+    }
+    preferences.setString('classes', tempClasses.trimRight());
   }
 
   // Get Student...
@@ -75,6 +84,7 @@ class Common {
     students.year_of_joining = preferences.getString('year_of_joining');
     return students;
   }
+
   // Get Teacher...
   Future<Teachers> getTeachers() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -87,8 +97,15 @@ class Common {
     teachers.password = preferences.getString('password');
     teachers.registration_id = preferences.getString('registration_id');
     teachers.year_of_joining = preferences.getString('year_of_joining');
+    List<String> clsses = <String>[];
+    if (preferences.get('classes') != "") {
+      String tempClasses = preferences.get('classes').toString();
+      clsses.addAll(tempClasses.split(" ").toList().map((e) => e));
+    }
+    teachers.classes=clsses;
     return teachers;
   }
+
   // Logout...
   logoutStudent() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
