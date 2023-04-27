@@ -7,11 +7,10 @@ import 'package:sms/Screens/home/assigments/Assignment_Card.dart';
 import 'package:sms/Screens/styles/font.dart';
 import 'package:sms/Screens/widgets/spacer.dart';
 
-// final storageRef = FirebaseStorage.instance.ref();
-// final mountainsRef = storageRef.child("mountains.jpg");
-
 class AssignmentUpload extends StatefulWidget {
-  const AssignmentUpload({Key? key}) : super(key: key);
+  const AssignmentUpload({Key? key, required this.classes}) : super(key: key);
+
+  final String classes;
 
   @override
   AssignmentUploadState createState() => AssignmentUploadState();
@@ -21,16 +20,24 @@ class AssignmentUploadState extends State<AssignmentUpload> {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   List<Map<String, dynamic>> pdfData = [];
 
+  Future getAllPdf() async {
+    final results = await _firebaseFirestore.collection(widget.classes).get();
+    pdfData = results.docs.map((e) => e.data()).toList();
+    setState(() {});
+  }
+
   Future<String?> uploadPdf(String fileName, File file) async {
-    final reference =
-        FirebaseStorage.instance.ref().child("assignments/$fileName.pdf");
+    final reference = FirebaseStorage.instance
+        .ref()
+        .child("Assignments/${widget.classes}/$fileName.pdf");
     final uploadTask = reference.putFile(file);
-    await uploadTask.whenComplete(() {});
+    await uploadTask.whenComplete(() => getAllPdf());
     final downloadLink = await reference.getDownloadURL();
-    await _firebaseFirestore.collection("assignments").add({
+    await _firebaseFirestore.collection(widget.classes).add({
       "name": fileName,
       "url": downloadLink,
     });
+
     return null;
   }
 
@@ -52,14 +59,6 @@ class AssignmentUploadState extends State<AssignmentUpload> {
     }
   }
 
-  Future getAllPdf() async {
-    final results = await _firebaseFirestore.collection("assignments").get();
-    pdfData = results.docs.map((e) => e.data()).toList();
-    setState(() {
-
-    });
-  }
-
   @override
   void initState() {
     getAllPdf();
@@ -75,28 +74,27 @@ class AssignmentUploadState extends State<AssignmentUpload> {
         centerTitle: true,
         toolbarHeight: 60.2,
         toolbarOpacity: 0.8,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(50),
-              bottomLeft: Radius.circular(50)),
-        ),
         elevation: 0.00,
         backgroundColor: const Color.fromARGB(255, 114, 203, 245),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
             child: RefreshIndicator(
-              onRefresh: (){
+              onRefresh: () {
                 return getAllPdf();
               },
               child: GridView.builder(
                   itemCount: pdfData.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
                   itemBuilder: (context, index) {
-                    return AssignmentCard(icon: Icons.picture_as_pdf_outlined, url: pdfData[index]['url'], heading: pdfData[index]['name'],);
+                    return AssignmentCard(
+                      icon: Icons.picture_as_pdf_outlined,
+                      url: pdfData[index]['url'],
+                      heading: pdfData[index]['name'],
+                    );
+                    //  AssignmentCard(icon: Icons.picture_as_pdf_outlined, url: pdfData[index]['url'], heading: pdfData[index]['name'],)
                   }),
             ),
           ),

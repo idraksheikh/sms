@@ -145,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     imgSrc: 'attendance.jpg',
                     heading: 'Assignment',
                     subHeading: 'View attendance',
-                    routeName: '/assignment',
+                    routeName: '/assignment_class',
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.025,
