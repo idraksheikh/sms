@@ -10,7 +10,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  Common _common = Common();
+  final Common _common = Common();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,10 +19,23 @@ class _ProfileState extends State<Profile> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            
             children: [
-              const SizedBox(
+               Container(
+                alignment: Alignment.centerLeft,
+                height: 20,
                 width: 20,
+                margin: const EdgeInsets.only(top: 40,left: 20),
+                child:  InkWell(
+                  onTap: (() async{
+                    await _common.logoutStudent();
+                    Navigator.pop(context);
+                  }),
+                  child: const  Expanded(
+                  child:Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  )),
+                ),
               ),
               Container(
                 alignment: Alignment.center,
@@ -41,8 +54,8 @@ class _ProfileState extends State<Profile> {
                 margin: const EdgeInsets.only(top: 40,right: 20),
                 child:  InkWell(
                   onTap: (() async{
-                    await _common.LogoutStudent();
-                    Navigator.pushNamed(context, '/wrapper');
+                    await _common.logoutStudent();
+                    Navigator.pushReplacementNamed(context, '/wrapper');
                   }),
                   child: const Image(
                     image: AssetImage('assets/images/logout.png'),

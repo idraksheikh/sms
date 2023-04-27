@@ -1,6 +1,7 @@
-
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms/Model/student.dart';
+
+import '../Model/teacher.dart';
 
 class Common {
   // Check the Visit...
@@ -16,13 +17,26 @@ class Common {
       return false;
     }
   }
+
+  // Check the user is login or not...
   static Future<bool> checkUserLogin() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     if (preferences.getString('registration_id') != '') return true;
+    print("Not Login Or Logout.");
     return false;
+  }
+  // Check the User ...
+  static Future<String> checkUser() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    if (preferences.getString('registration_id')!.startsWith('ST')) {
+      return 'ST';
+    } else if (preferences.getString('registration_id')!.startsWith('TA')) {
+      return 'TA';
     }
-  
-   setStudents(Students? students) async {
+    return 'AD';
+  }
+  // Set Student After Login...
+  setStudents(Students? students) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString('address', students!.address ?? '');
     preferences.setString('standard', students.standard ?? '');
@@ -30,23 +44,24 @@ class Common {
     preferences.setString('mobile', students.mobile ?? '');
     preferences.setString('name', students.name ?? '');
     preferences.setString('password', students.password ?? '');
-    preferences.setString('registration_id', students.registration_id ?? 'ST202301001');
+    preferences.setString('registration_id', students.registration_id ?? '');
     preferences.setString('year_of_joining', students.year_of_joining ?? '');
   }
 
-LogoutStudent() async {
+// Set Teacher After Login...
+  setTeachers(Teachers? teachrs) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString('address','');
-    preferences.setString('standard','');
-    preferences.setString('dob','');
-    preferences.setString('mobile','');
-    preferences.setString('name','');
-    preferences.setString('password','');
-    preferences.setString('registration_id','');
-    preferences.setString('year_of_joining','');
-    
+    preferences.setString('address', teachrs!.address ?? '');
+    preferences.setString('subject', teachrs.subject ?? '');
+    preferences.setString('mobile', teachrs.mobile ?? '');
+    preferences.setString('name', teachrs.name ?? '');
+    preferences.setString('password', teachrs.password ?? '');
+    preferences.setString('registration_id', teachrs.registration_id ?? '');
+    preferences.setString('year_of_joining', teachrs.year_of_joining ?? '');
   }
-   Future<Students> getStudents() async {
+
+  // Get Student...
+  Future<Students> getStudents() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     Students students = Students();
 
@@ -59,5 +74,31 @@ LogoutStudent() async {
     students.registration_id = preferences.getString('registration_id');
     students.year_of_joining = preferences.getString('year_of_joining');
     return students;
+  }
+  // Get Teacher...
+  Future<Teachers> getTeachers() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    Teachers teachers = Teachers();
+
+    teachers.address = preferences.getString('address');
+    teachers.subject = preferences.getString('subject');
+    teachers.mobile = preferences.getString('mobile');
+    teachers.name = preferences.getString('name');
+    teachers.password = preferences.getString('password');
+    teachers.registration_id = preferences.getString('registration_id');
+    teachers.year_of_joining = preferences.getString('year_of_joining');
+    return teachers;
+  }
+  // Logout...
+  logoutStudent() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('address', '');
+    preferences.setString('standard', '');
+    preferences.setString('dob', '');
+    preferences.setString('mobile', '');
+    preferences.setString('name', '');
+    preferences.setString('password', '');
+    preferences.setString('registration_id', '');
+    preferences.setString('year_of_joining', '');
   }
 }

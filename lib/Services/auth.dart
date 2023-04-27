@@ -48,8 +48,8 @@ class Authentication {
           if (teachers.password == password) {
             SharedPreferences preference =
                 await SharedPreferences.getInstance();
-            preference.setString('registrationId', teachers.registration_id!);
-            preference.setString('password', teachers.password!);
+            
+                await _common.setTeachers(teachers);
             Fluttertoast.showToast(msg: "Login Successfull");
             return true;
           } else {

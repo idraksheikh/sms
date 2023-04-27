@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:sms/Screens/home/home_page.dart';
+import 'package:sms/Screens/home/home_page/home_page.dart';
+import 'package:sms/Screens/home/home_page/home_page_wrapper.dart';
 import 'package:sms/Services/common.dart';
 import 'authentication/login_page.dart';
 
@@ -26,7 +27,7 @@ class _WrapperState extends State<Wrapper> {
               );
             }
             if (snapshot.hasData) {
-              return snapshot.data ? const MyHomePage() : LoginPage();
+              return snapshot.data ? const WrapperHomePage() : LoginPage();
             }
             return const Center(
               child: CircularProgressIndicator(),
