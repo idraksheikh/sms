@@ -4,33 +4,44 @@ import 'package:sms/Model/attendence.dart';
 import 'package:sms/Screens/home/attendance/attendance.dart';
 
 class AttendenceManagement {
-  Future<Map<String, bool>> getAttendence() async {
-    Map<String, bool> StudentAttendence = <String, bool>{};
-
+  Future<GetAttendenceResponse> getAttendence() async {
+    GetAttendenceResponse StudentAttendence = GetAttendenceResponse();
+    int working_days = 0;
+    int total_absent = 0;
+    int total_present = 0;
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       String? registration_id = preferences.getString('registration_id');
-      Attendence classAtt=await FirebaseFirestore.instance.collection('Attendence').get().then(((value) =>
-        
-     Attendence.fromJson(value.docs[0].data())
-      ));
-      print("hello");
+      Attendence classAtt = await FirebaseFirestore.instance
+          .collection('Attendence')
+          .get()
+          .then(((value) => Attendence.fromJson(value.docs[0].data())));
 
-      
-
-      
       classAtt.dates?.forEach((key, value) {
-        if (value.attendence?.containsKey(registration_id) ?? false) {
-          StudentAttendence.putIfAbsent(
-              key, () => value.attendence?[registration_id] ?? false);
+        if (value.attendence?[registration_id] != null) {
+          if (value.attendence?.containsKey(registration_id) ?? false) {
+            StudentAttendence.list_attendence?.putIfAbsent(
+                key, () => value.attendence?[registration_id] ?? false);
+
+            if (value.attendence?[registration_id] ?? false) {
+              total_present++;
+            } else {
+              total_absent++;
+            }
+          }
+          working_days++;
         }
       });
-      print(StudentAttendence);
+      StudentAttendence.working_days = working_days.toString();
+      StudentAttendence.total_present = total_present.toString();
+      StudentAttendence.total_absent = total_absent.toString();
     } catch (e) {
-      print("Error");
       print(e);
     }
-
+    print(StudentAttendence.working_days);
+    print(StudentAttendence.total_absent);
+    print(StudentAttendence.total_present);
+    print(StudentAttendence.list_attendence);
     return StudentAttendence;
   }
 }

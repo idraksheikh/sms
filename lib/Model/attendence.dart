@@ -3,7 +3,6 @@ class Attendence {
 
   Attendence.fromJson(Map<String, dynamic> json) {
     if (json['dates'] != null) {
-      print('h1');
       dates = <String, Dates>{};
       json['dates'].forEach((key, value) {
         dates?.putIfAbsent(key, () => Dates.fromJson(value));
@@ -46,4 +45,12 @@ class Dates {
     }
     return data;
   }
+}
+
+class GetAttendenceResponse {
+  String? working_days;
+  String? total_present;
+  String? total_absent;
+
+  Map<String, bool>? list_attendence = <String, bool>{};
 }
