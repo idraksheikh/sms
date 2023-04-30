@@ -1,23 +1,20 @@
-import 'dart:js';
-
 class Attendence {
   Map<String, Dates>? dates;
 
   Attendence.fromJson(Map<String, dynamic> json) {
-    
     if (json['dates'] != null) {
+      print('h1');
       dates = <String, Dates>{};
-      for (MapEntry<String, Dates> me in json['dates']) {
-        dates![me.key] = Dates.fromJson(me.value as dynamic);
-      }
+      json['dates'].forEach((key, value) {
+        dates?.putIfAbsent(key, () => Dates.fromJson(value));
+      });
     }
   }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    
+
     if (dates != null) {
-      data['dates'] =
-          dates!.map((key, value) => MapEntry(key, value.toJson()));
+      data['dates'] = dates!.map((key, value) => MapEntry(key, value.toJson()));
     }
     return data;
   }
@@ -35,9 +32,9 @@ class Dates {
     teacher_id = json['teacher_id'];
     if (json['attendence'] != null) {
       attendence = <String, bool>{};
-      for (MapEntry<String, bool> me in json['attendence']) {
-        attendence![me.key] = me.value;
-      }
+      json['attendence'].forEach((key, value) {
+        attendence?.putIfAbsent(key, () => value);
+      });
     }
   }
   Map<String, dynamic> toJson() {

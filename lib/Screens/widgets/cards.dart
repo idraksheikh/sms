@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sms/Services/attendence.dart';
 
 class Cards extends StatelessWidget {
   final String routeName;
   final String imgSrc;
   final String heading;
   final String subHeading;
-
+ 
   const Cards(
       {Key? key,
       this.routeName = '/home',
@@ -14,6 +15,7 @@ class Cards extends StatelessWidget {
       this.heading = 'Heading',
       this.subHeading = 'SubHeading'})
       : super(key: key);
+      
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,9 @@ class Cards extends StatelessWidget {
       borderRadius: BorderRadius.circular(24),
       splashColor: Colors.white,
       onTap: () {
+        if(heading=="Dummy"){
+           AttendenceManagement().getAttendence();
+        }
         Navigator.pushNamed(context, routeName);
       },
       child: Card(
