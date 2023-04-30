@@ -128,6 +128,15 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                         height: 10,
                       ),
                       infoBox(context, 'Classes Alloted', snapshot.data!.classes?.map((e) => e).toString() ?? ""),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: (() {
+                          Navigator.pushNamed(context, '/teacher_attendence');
+                        }),
+                        child: infoBox(context, 'Add Attendance', ""),
+                      )
                       
                     ],
                   );
@@ -149,10 +158,26 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         color: Colors.grey.shade100,
       ),
-      child: Column(
+      child: 
+      infovalue==""?
+      Container(
+            alignment: Alignment.centerLeft,
+            margin: const EdgeInsets.only(left: 10),
+            child: Text(
+              infokey!,
+              style: TextStyle(
+                fontSize: 26,
+                color: Colors.grey.shade600,
+              ),
+            ),
+          )
+      :
+      
+      Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          
           Container(
             alignment: Alignment.topLeft,
             margin: const EdgeInsets.only(left: 10),

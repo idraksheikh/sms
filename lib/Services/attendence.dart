@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms/Model/attendence.dart';
-import 'package:sms/Screens/home/attendance/attendance.dart';
 
 class AttendenceManagement {
   Future<GetAttendenceResponse> getAttendence() async {
