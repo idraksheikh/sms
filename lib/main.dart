@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sms/Screens/home/assigments/assignment_class_folder.dart';
+import 'package:sms/Screens/home/attendance/attendance_model.dart';
 import 'package:sms/Screens/home/fees/fee_information.dart';
 import 'package:sms/Screens/forms.dart';
 import 'package:sms/Screens/home/home_page/home_page.dart';
@@ -35,7 +36,6 @@ class _SMSState extends State<SMS> {
 
   @override
   Widget build(BuildContext context) {
-    
     return FutureBuilder<bool>(
         future: Common.checkPreviousVisit(),
         builder: (context, AsyncSnapshot<bool> snapshot) {
@@ -62,6 +62,7 @@ class _SMSState extends State<SMS> {
                   'feeInfo': (context) => const FeeInformation(),
                   '/assignment_class': (context) => const AssignmentFolder(),
                   '/attendance': (context) => const Attendance(),
+                  '/attendance_data': (context) => const UserInformation(),
                   '/wrapper': (context) => const Wrapper(),
                 },
               );
@@ -77,6 +78,7 @@ class _SMSState extends State<SMS> {
                   'feeInfo': (context) => const FeeInformation(),
                   '/assignment_class': (context) => const AssignmentFolder(),
                   '/attendance': (context) => const Attendance(),
+                  '/attendance_data': (context) => const UserInformation(),
                   '/wrapper': (context) => const Wrapper(),
                 },
               );

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms/Model/attendence.dart';
-import 'package:sms/Screens/home/attendance/attendance.dart';
 
 class AttendenceManagement {
   Future<GetAttendenceResponse> getAttendence() async {
@@ -36,12 +35,7 @@ class AttendenceManagement {
       StudentAttendence.total_present = total_present.toString();
       StudentAttendence.total_absent = total_absent.toString();
     } catch (e) {
-      print(e);
     }
-    print(StudentAttendence.working_days);
-    print(StudentAttendence.total_absent);
-    print(StudentAttendence.total_present);
-    print(StudentAttendence.list_attendence);
     return StudentAttendence;
   }
 }

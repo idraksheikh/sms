@@ -155,6 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     imgSrc: 'attendance_2.jpg',
                     heading: 'Dummy',
                     subHeading: 'View current assignments',
+                    routeName: '/attendance_data',
                   ),
                 ]),
               ]),
