@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:sms/Services/common.dart';
+import 'package:intl/intl.dart';
 
 class TeacherAttendence extends StatefulWidget {
   const TeacherAttendence({super.key});
@@ -13,6 +15,14 @@ class TeacherAttendence extends StatefulWidget {
 class _TeacherAttendenceState extends State<TeacherAttendence> {
   String? selectedClass;
   int count = 0;
+  TextEditingController dateInput = TextEditingController();
+
+  @override
+  void initState() {
+    dateInput.text = ""; //set the initial value of text field
+    super.initState();
+  }
+
   void updateValue(String val) {
     setState(() {
       selectedClass = val;
@@ -31,7 +41,6 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
     return list;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +52,7 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
           const SizedBox(
             height: 40,
           ),
-           Center(
+          Center(
             child: Text(
               'Upload Attendence',
               textAlign: TextAlign.center,
@@ -59,7 +68,8 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
           ),
           Container(
             decoration: BoxDecoration(
-              border: Border.all(),
+              border: Border.all(color: Colors.blue.shade900),
+              
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
             padding: const EdgeInsets.only(left: 20, right: 20),
@@ -78,11 +88,11 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
                       ),
                       isExpanded: true,
                       elevation: 8,
-                      focusColor: Colors.teal.shade100,
-                      dropdownColor: Colors.teal.shade50,
+                      focusColor: Colors.blue.shade100,
+                      dropdownColor: Colors.blue.shade50,
                       icon: Icon(
                         Icons.arrow_downward_rounded,
-                        color: Colors.teal.shade600,
+                        color: Colors.blue.shade500,
                       ),
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                       hint: const Text("Select a Class"),
@@ -95,7 +105,7 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
                           child: Text(
                             'Class $value',
                             style: TextStyle(
-                              color: Colors.teal.shade600,
+                              color: Colors.blue.shade500,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -106,9 +116,59 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
                   return const CircularProgressIndicator();
                 }),
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          
+          Row(
+            children: [
+              Container(
+                  padding: const EdgeInsets.all(15),
+                  height: MediaQuery.of(context).size.width / 4,
+                  width: MediaQuery.of(context).size.width * 0.42,
+                  child: Center(
+                      child: TextField(
+                    controller: dateInput,
+                    //editing controller of this TextField
+                    decoration: const InputDecoration(
+                        alignLabelWithHint: true,
+                        icon: Icon(Icons.calendar_today), //icon of text field
+                        labelText: "Enter Date" //label text of field
+                        ),
+                    readOnly: true,
+                    //set it true, so that user will not able to edit text
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now().subtract(const Duration(
+                            days: 30, hours: 0, minutes: 0, seconds: 0)),
+                        //DateTime.now() - not to allow to choose before today.
+                        lastDate: DateTime.now(),
+                      );
+
+                      if (pickedDate != null) {
+                        String formattedDate =
+                            DateFormat('yyyy-MM-dd').format(pickedDate);
+                        print(
+                            formattedDate); //formatted date output using intl package =>  2021-03-16
+                        setState(() {
+                          dateInput.text =
+                              formattedDate; //set output date to TextField value.
+                        });
+                      } else {}
+                    },
+                  ))),
+              const SizedBox(
+                width: 40,
+              ),
+              ElevatedButton(
+                onPressed: (() {}),
+                child: const Text('View Student',style: TextStyle(
+                    color: Colors.white
+                  ),
+                ),
+              )
+            ],
+          )
+          // DatePickerDialog(initialDate: DateTime.now(), firstDate: DateTime.now().subtract(const Duration(days: 30,hours: 0,minutes: 0,seconds: 0)), lastDate: DateTime.now())
         ],
       ),
     );
