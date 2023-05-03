@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sms/Screens/widgets/spacer.dart';
 
 class ProfileCard extends StatelessWidget {
   final String routeName;
@@ -10,10 +8,10 @@ class ProfileCard extends StatelessWidget {
 
   const ProfileCard(
       {Key? key,
-        this.routeName = '/home',
-        this.imgSrc = 'cards.png',
-        this.heading = 'Heading',
-        this.subHeading = 'SubHeading'})
+      this.routeName = '/home',
+      this.imgSrc = 'cards.png',
+      this.heading = 'Heading',
+      this.subHeading = 'SubHeading'})
       : super(key: key);
 
   @override
@@ -27,7 +25,7 @@ class ProfileCard extends StatelessWidget {
         Navigator.pushNamed(context, routeName);
       },
       child: Card(
-        elevation: 3,
+        elevation: 1,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Container(
           height: MediaQuery.of(context).size.height * 0.06,
@@ -37,7 +35,11 @@ class ProfileCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             // gradient: RadialGradient(colors: const [Colors.transparent, Colors.purpleAccent]),
-            image: DecorationImage(image: AssetImage('assets/images/$imgSrc'), fit: BoxFit.cover, opacity: 0.8),
+            image: DecorationImage(
+                image: AssetImage('assets/images/$imgSrc'),
+                fit: BoxFit.cover,
+                opacity: 0.8),
+
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,

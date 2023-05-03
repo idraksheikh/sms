@@ -81,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: 25,
                   ),
                   const ProfileCard(
-                    imgSrc: 'gurpreet_singh_bhatia.jpg',
+                    imgSrc: 'icon.png',
                     routeName: '/profile',
                   ),
                 ],
@@ -119,12 +119,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  const Cards(
-                    routeName: '/form',
-                    imgSrc: 'form.jpg',
-                    heading: 'Form',
-                    subHeading: 'Student Entry Form',
-                  ),
+                  // const Cards(
+                  //   routeName: '/form',
+                  //   imgSrc: 'form.jpg',
+                  //   heading: 'Form',
+                  //   subHeading: 'Student Entry Form',
+                  // ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.025,
                   ),
@@ -150,13 +150,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.025,
                   ),
-                  const Cards(
-                    // routeName: '/form',
-                    imgSrc: 'attendance_2.jpg',
-                    heading: 'Dummy',
-                    subHeading: 'View current assignments',
-                    routeName: '/attendance_data',
-                  ),
+                  // const Cards(
+                  //   // routeName: '/form',
+                  //   imgSrc: 'attendance_2.jpg',
+                  //   heading: 'Dummy',
+                  //   subHeading: 'View current assignments',
+                  //   routeName: '/attendance_data',
+                  // ),
                 ]),
               ]),
             ],
