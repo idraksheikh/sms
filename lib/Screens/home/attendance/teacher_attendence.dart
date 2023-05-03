@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:sms/Model/attendence.dart';
+import 'package:sms/Services/attendence.dart';
 import 'package:sms/Services/common.dart';
 import 'package:intl/intl.dart';
 
@@ -17,10 +19,35 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
   int count = 0;
   TextEditingController dateInput = TextEditingController();
 
+  List<StudentList> giveList() {
+    List<StudentList> stdl = <StudentList>[];
+    StudentList s1 = StudentList();
+    s1.present=true;
+    s1.studentsRegId="ST202301001";
+    stdl.add(s1);
+    StudentList s2 = StudentList();
+    s2.present=true;
+    s2.studentsRegId="ST202301002";
+    stdl.add(s2);
+    StudentList s3 = StudentList();
+    s3.present=true;
+    s3.studentsRegId="ST202301003";
+    stdl.add(s3);
+    StudentList s4 = StudentList();
+    s4.present=true;
+    s4.studentsRegId="ST202301004";
+    stdl.add(s4);
+    return stdl;
+  }
+
+  List<StudentList> stdList = <StudentList>[];
   @override
   void initState() {
     dateInput.text = ""; //set the initial value of text field
     super.initState();
+    setState(() {
+      stdList=giveList();
+    });
   }
 
   void updateValue(String val) {
@@ -69,7 +96,6 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
           Container(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.blue.shade900),
-              
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
             padding: const EdgeInsets.only(left: 20, right: 20),
@@ -116,7 +142,6 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
                   return const CircularProgressIndicator();
                 }),
           ),
-          
           Row(
             children: [
               Container(
@@ -160,79 +185,55 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
                 width: 40,
               ),
               ElevatedButton(
-                onPressed: (() {}),
-                child: const Text('View Student',style: TextStyle(
-                    color: Colors.white
-                  ),
+                onPressed: (() async{
+                  await AttendenceManagement().getStudentList("1");
+                }),
+                child: const Text(
+                  'View Student',
+                  style: TextStyle(color: Colors.white),
                 ),
               )
             ],
-          )
-          
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            height: 400,
+            child: ListView(
+              children: stdList.map(studentListBuilder).toList(),
+            )
+            ),
           
         ],
       ),
     );
   }
 
-  Widget infoBox(BuildContext context, String? infokey, String? infovalue) {
+ Widget studentListBuilder(StudentList stdl)=> studentListBox(context,stdList.indexOf(stdl), stdl.studentsRegId, stdl.present);
+  Widget studentListBox(
+      BuildContext context,index, String? studRegId, bool? isPresent) {
     return Container(
-      height: 60,
-      width: 280,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        color: Colors.grey.shade100,
-      ),
-      child: 
-      infovalue==""?
-      Container(
-            alignment: Alignment.centerLeft,
-            margin: const EdgeInsets.only(left: 10),
-            child: Text(
-              infokey!,
-              style: TextStyle(
-                fontSize: 26,
-                color: Colors.grey.shade600,
-              ),
-            ),
-          )
-      :
-      
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          
-          Container(
-            alignment: Alignment.topLeft,
-            margin: const EdgeInsets.only(left: 10),
-            child: Text(
-              infokey!,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey.shade600,
-              ),
-            ),
+      padding: const EdgeInsets.only(left: 20, right: 20),
+      height: 30,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Text('${index+1}'),
+          Text(
+            studRegId!,
+            textAlign: TextAlign.start,
           ),
-          const SizedBox(
-            height: 5,
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            margin: const EdgeInsets.only(left: 10),
-            child: Text(
-              infovalue!,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
+          Checkbox(
+              value: stdList[index].present,
+              onChanged: ((value) {
+                setState(() {
+                  stdList[index].present = value!;
+                });
+              }))
         ],
       ),
     );
-  } 
+  }
 }

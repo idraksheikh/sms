@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms/Model/attendence.dart';
+import 'package:sms/Model/student.dart';
 
 class AttendenceManagement {
   Future<GetAttendenceResponse> getAttendence() async {
@@ -34,13 +35,24 @@ class AttendenceManagement {
       StudentAttendence.working_days = working_days.toString();
       StudentAttendence.total_present = total_present.toString();
       StudentAttendence.total_absent = total_absent.toString();
-    } catch (e) {
-    }
+    } catch (e) {}
     return StudentAttendence;
   }
-  Future<List<StudentList>> getStudentList(String? standard)async{
-    List<StudentList> stdList=<StudentList>[];
-   FirebaseFirestore.instance.collection('Students').where('standard',isEqualTo: standard).get().then((value) => value);
-   return stdList;
+
+  Future<List<StudentList>> getStudentList(String? standard) async {
+    List<StudentList> stdList = <StudentList>[];
+    Iterable<List<dynamic>> std=(await FirebaseFirestore.instance
+        .collection('Students')
+        .where('standard', isEqualTo: standard)
+        .get().then((value) => value.docs.map((e) =>e.data().values.toList()
+        )));
+        
+        // st.forEach((element) {
+        //   StudentList st=StudentList();
+        //   st.studentsRegId=element.registration_id;
+        //   st.present=false;
+        //   stdList.add(st);
+        // });
+    return stdList;
   }
 }
