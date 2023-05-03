@@ -35,12 +35,7 @@ class AttendenceManagement {
       StudentAttendence.total_present = total_present.toString();
       StudentAttendence.total_absent = total_absent.toString();
     } catch (e) {
-      print(e);
     }
-    print(StudentAttendence.working_days);
-    print(StudentAttendence.total_absent);
-    print(StudentAttendence.total_present);
-    print(StudentAttendence.list_attendence);
     return StudentAttendence;
   }
   Future<List<StudentList>> getStudentList(String? standard)async{

@@ -97,7 +97,7 @@ class _ProfileState extends State<Profile> {
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           image: DecorationImage(
                               alignment: Alignment.center,
-                              image: AssetImage("assets/images/profile.jpg")),
+                              image: AssetImage("assets/images/icon.png")),
                         ),
                       ),
                       const SizedBox(

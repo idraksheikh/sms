@@ -1,6 +1,7 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:sms/Screens/home/assigments/add_class.dart';
+import 'package:sms/Screens/home/assigments/dialog_box.dart';
 import 'package:sms/Screens/styles/font.dart';
 import 'package:sms/Screens/widgets/spacer.dart';
 
@@ -15,60 +16,7 @@ class AssignmentFolder extends StatefulWidget {
 class AssignmentFolderState extends State<AssignmentFolder> {
   List<Map<String, dynamic>> pdfData = [];
   List classes = [];
-  final TextEditingController _textFieldController = TextEditingController();
 
-  Future<void> _showMyDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            'Enter the Class',
-            style: ThemeFontStyle(fontSize: 18).style,
-          ),
-          content: TextField(
-            onChanged: (value) {
-              setState(() {
-                // className = value;
-              });
-            },
-            controller: _textFieldController,
-            decoration: InputDecoration(
-                hintText: "Eg. Class I",
-                hintStyle:
-                ThemeFontStyle(fontSize: 14, fontWeight: FontWeight.normal)
-                    .style),
-          ),
-          actions: <Widget>[
-            OutlinedButton(
-              child: Text(
-                'Cancel',
-                style: ThemeFontStyle(fontSize: 14, color: Colors.blue).style,
-              ),
-              onPressed: () {
-                setState(() {
-                  Navigator.pop(context);
-                });
-              },
-            ),
-            OutlinedButton(
-              child: Text(
-                'Create',
-                style: ThemeFontStyle(fontSize: 14, color: Colors.blue).style,
-              ),
-              onPressed: () {
-                createClass(_textFieldController.text);
-                setState(() {
-                  Navigator.pop(context);
-                });
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   Future<String?> createClass(String name) async {
     final reference = FirebaseStorage.instance.ref().child(("Assignments/$name/.initialise"));
@@ -137,15 +85,7 @@ class AssignmentFolderState extends State<AssignmentFolder> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14),
               ),
-              child: OutlinedButton(
-                  onPressed: () {
-                    _showMyDialog();
-                  },
-                  child: Text(
-                    'Add Class',
-                    style:
-                    ThemeFontStyle(fontSize: 16, color: Colors.blue).style,
-                  )),
+              child: const Center(child: DialogBox()),
             ),
           ),
           const Space(
