@@ -168,9 +168,71 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
               )
             ],
           )
-          // DatePickerDialog(initialDate: DateTime.now(), firstDate: DateTime.now().subtract(const Duration(days: 30,hours: 0,minutes: 0,seconds: 0)), lastDate: DateTime.now())
+          
+          
         ],
       ),
     );
   }
+
+  Widget infoBox(BuildContext context, String? infokey, String? infovalue) {
+    return Container(
+      height: 60,
+      width: 280,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        color: Colors.grey.shade100,
+      ),
+      child: 
+      infovalue==""?
+      Container(
+            alignment: Alignment.centerLeft,
+            margin: const EdgeInsets.only(left: 10),
+            child: Text(
+              infokey!,
+              style: TextStyle(
+                fontSize: 26,
+                color: Colors.grey.shade600,
+              ),
+            ),
+          )
+      :
+      
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          
+          Container(
+            alignment: Alignment.topLeft,
+            margin: const EdgeInsets.only(left: 10),
+            child: Text(
+              infokey!,
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey.shade600,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Container(
+            alignment: Alignment.topLeft,
+            margin: const EdgeInsets.only(left: 10),
+            child: Text(
+              infovalue!,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+        ],
+      ),
+    );
+  } 
 }

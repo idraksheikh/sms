@@ -27,7 +27,6 @@ class _ProfileState extends State<Profile> {
                 margin: const EdgeInsets.only(top: 40,left: 20),
                 child:  InkWell(
                   onTap: (() async{
-                    await _common.logoutStudent();
                     Navigator.pop(context);
                   }),
                   child: const  Expanded(

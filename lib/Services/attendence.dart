@@ -38,4 +38,9 @@ class AttendenceManagement {
     }
     return StudentAttendence;
   }
+  Future<List<StudentList>> getStudentList(String? standard)async{
+    List<StudentList> stdList=<StudentList>[];
+   FirebaseFirestore.instance.collection('Students').where('standard',isEqualTo: standard).get().then((value) => value);
+   return stdList;
+  }
 }
