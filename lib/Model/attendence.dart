@@ -54,3 +54,8 @@ class GetAttendenceResponse {
 
   Map<String, bool>? list_attendence = <String, bool>{};
 }
+
+class StudentList{
+  String? studentsRegId;
+  bool? present;
+}
