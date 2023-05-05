@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sms/Screens/home/assigments/assignment_class_folder.dart';
+import 'package:sms/Screens/home/assigments/student_assignment_upload.dart';
 import 'package:sms/Screens/home/attendance/attendance_model.dart';
 import 'package:sms/Screens/home/attendance/teacher_attendence.dart';
 import 'package:sms/Screens/home/fees/fee_information.dart';
@@ -64,6 +65,7 @@ class _SMSState extends State<SMS> {
                   '/assignment_class': (context) => const AssignmentFolder(),
                   '/attendance': (context) => const Attendance(),
                   '/attendance_data': (context) => const UserInformation(),
+                  '/student_upload' : (context) => const StudentAssignmentUpload(),
                   '/wrapper': (context) => const Wrapper(),
                   '/teacher_attendance':(context) => const TeacherAttendence(),
                 },
