@@ -41,18 +41,24 @@ class AttendenceManagement {
 
   Future<List<StudentList>> getStudentList(String? standard) async {
     List<StudentList> stdList = <StudentList>[];
-    Iterable<List<dynamic>> std=(await FirebaseFirestore.instance
-        .collection('Students')
-        .where('standard', isEqualTo: standard)
-        .get().then((value) => value.docs.map((e) =>e.data().values.toList()
-        )));
-        
-        // st.forEach((element) {
-        //   StudentList st=StudentList();
-        //   st.studentsRegId=element.registration_id;
-        //   st.present=false;
-        //   stdList.add(st);
-        // });
+    List<Students> stds = <Students>[];
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection("Students").get();
+    for (int i = 0; i < querySnapshot.docs.length; i++) {
+      dynamic a = querySnapshot.docs[i].data();
+      stds.add(Students.fromJson(a));
+    }
+
+    stds.forEach((element) {
+      if (element.standard == standard) {
+        StudentList st = StudentList();
+        st.studentsRegId = element.registration_id;
+        st.present = false;
+        stdList.add(st);
+      }
+    });
+
+   
     return stdList;
   }
 }
