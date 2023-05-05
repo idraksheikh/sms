@@ -13,7 +13,6 @@ class AttendanceCard extends StatefulWidget {
   final String? present;
   final String? absent;
 
-
   const AttendanceCard({
     Key? key,
     this.routeName = '/home',
@@ -36,16 +35,16 @@ class _AttendanceCardState extends State<AttendanceCard> {
 
   @override
   void initState() {
-   attendancePercentage();
+    attendancePercentage();
     super.initState();
   }
 
   Future attendancePercentage() async {
-  tAbsent = double.tryParse(widget.absent ?? '1');
-  tPresent = double.parse(widget.present ?? '2');
-  totalAttendancePercentage = tPresent!/(tPresent!+tAbsent!) * 100;
-  return totalAttendancePercentage;
-}
+    tAbsent = double.tryParse(widget.absent ?? '1');
+    tPresent = double.parse(widget.present ?? '2');
+    totalAttendancePercentage = tPresent! / (tPresent! + tAbsent!) * 100;
+    return totalAttendancePercentage;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,17 +52,7 @@ class _AttendanceCardState extends State<AttendanceCard> {
     return FutureBuilder<GetAttendenceResponse>(
         future: _attendee.getAttendence(),
         builder: (context, AsyncSnapshot<GetAttendenceResponse> snapshot) {
-          if (snapshot.hasError) {
-            return const MaterialApp(
-                debugShowCheckedModeBanner: false,
-                home: Scaffold(
-                  backgroundColor: Colors.white,
-                  body: Center(
-                    child: Text("Some error occured"),
-                  ),
-                ));
-          }
-          if (snapshot.hasData) {
+          {
             return InkWell(
               focusColor: Colors.white,
               borderRadius: BorderRadius.circular(24),
@@ -76,14 +65,8 @@ class _AttendanceCardState extends State<AttendanceCard> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24)),
                 child: Container(
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.16,
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.92,
+                  height: MediaQuery.of(context).size.height * 0.16,
+                  width: MediaQuery.of(context).size.width * 0.92,
                   padding: const EdgeInsets.all(10),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
@@ -112,14 +95,14 @@ class _AttendanceCardState extends State<AttendanceCard> {
                         roundedCap: (_, __) => true,
                         child: Center(
                             child: Text(
-                              "${totalAttendancePercentage!.toInt()}%",
-                              style: GoogleFonts.lato(
-                                textStyle: const TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            )),
+                          "${totalAttendancePercentage!.toInt()}%",
+                          style: GoogleFonts.lato(
+                            textStyle: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )),
                       ),
                       const Space(
                         width: 15,
@@ -152,20 +135,6 @@ class _AttendanceCardState extends State<AttendanceCard> {
               ),
             );
           }
-          return MaterialApp(
-              home: Scaffold(
-                backgroundColor: Colors.white,
-                body: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      CircularProgressIndicator(),
-                      Text("Processing"),
-                    ],
-                  ),
-                ),
-              ));
         });
   }
 }
