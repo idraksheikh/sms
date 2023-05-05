@@ -57,12 +57,14 @@ class _MyHomePageState extends State<MyHomePage> {
             return Scaffold(
               body: SafeArea(
                 child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
                   decoration: const BoxDecoration(
                     color: Color.fromRGBO(245, 248, 254, 1),
                     // image: DecorationImage(image: AssetImage('assets/images/home.jpg'), fit: BoxFit.fill, opacity: 0.7)
                   ),
                   child: Column(
-                    // mainAxisSize: MainAxisSize.min,
+                    // mainAxisSize: MainAxisSize.max,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
