@@ -13,7 +13,6 @@ import 'package:sms/Screens/wrapper.dart';
 import 'package:sms/Services/Common.dart';
 
 import 'Screens/authentication/login_page.dart';
-import 'Screens/home/attendance/teacher_attendence.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,7 +64,6 @@ class _SMSState extends State<SMS> {
                   '/attendance': (context) => const Attendance(),
                   '/attendance_data': (context) => const UserInformation(),
                   '/wrapper': (context) => const Wrapper(),
-                  '/teacher_attendence': (context) => const TeacherAttendence(),
                 },
               );
             } else {
@@ -82,7 +80,6 @@ class _SMSState extends State<SMS> {
                   '/attendance': (context) => const Attendance(),
                   '/attendance_data': (context) => const UserInformation(),
                   '/wrapper': (context) => const Wrapper(),
-                  '/teacher_attendence': (context) => const TeacherAttendence(),
                 },
               );
             }

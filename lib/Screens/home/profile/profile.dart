@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sms/Model/student.dart';
+import 'package:sms/Screens/styles/font.dart';
+import 'package:sms/Screens/widgets/spacer.dart';
 import 'package:sms/Services/common.dart';
 
 class Profile extends StatefulWidget {
@@ -11,26 +13,28 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final Common _common = Common();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-               Container(
-                alignment: Alignment.centerLeft,
+              Container(
+                // alignment: Alignment.centerLeft,
                 height: 20,
                 width: 20,
-                margin: const EdgeInsets.only(top: 40,left: 20),
-                child:  InkWell(
-                  onTap: (() async{
+                margin: const EdgeInsets.only(top: 40, left: 20),
+                child: InkWell(
+                  onTap: (() async {
                     Navigator.pop(context);
                   }),
-                  child: const  Expanded(
-                  child:Icon(
+                  child: const Expanded(
+                      child: Icon(
                     Icons.arrow_back,
                     color: Colors.black,
                   )),
@@ -39,20 +43,18 @@ class _ProfileState extends State<Profile> {
               Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.only(top: 40),
-                child: const Text(
+                child: Text(
                   'Profile',
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
+                  style: ThemeFontStyle(fontSize: 22, color: Colors.black).style,
                 ),
               ),
               Container(
                 alignment: Alignment.centerRight,
                 height: 20,
                 width: 20,
-                margin: const EdgeInsets.only(top: 40,right: 20),
-                child:  InkWell(
-                  onTap: (() async{
+                margin: const EdgeInsets.only(top: 40, right: 20),
+                child: InkWell(
+                  onTap: (() async {
                     await _common.logoutStudent();
                     Navigator.pushReplacementNamed(context, '/wrapper');
                   }),
@@ -64,7 +66,7 @@ class _ProfileState extends State<Profile> {
             ],
           ),
           const SizedBox(
-            height: 10,
+            height: 40,
           ),
           FutureBuilder<Students>(
               future: _common.getStudents(),
@@ -74,32 +76,34 @@ class _ProfileState extends State<Profile> {
                 }
                 if (snapshot.hasData) {
                   return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Container(
-                        alignment: Alignment.topLeft,
-                        margin: const EdgeInsets.only(left: 40),
-                        child: Text(
-                          'PROFILE IMAGE',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey.shade500,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        height: 150,
-                        width: 150,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          image: DecorationImage(
-                              alignment: Alignment.center,
-                              image: AssetImage("assets/images/icon.png")),
-                        ),
-                      ),
+                      // Container(
+                      //   alignment: Alignment.topLeft,
+                      //   margin: const EdgeInsets.only(left: 40),
+                      //   child: Text(
+                      //     'PROFILE IMAGE',
+                      //     style: TextStyle(
+                      //       fontSize: 14,
+                      //       color: Colors.grey.shade500,
+                      //     ),
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Container(
+                      //   alignment: Alignment.center,
+                      //   height: 150,
+                      //   width: 150,
+                      //   decoration: const BoxDecoration(
+                      //     borderRadius: BorderRadius.all(Radius.circular(20)),
+                      //     image: DecorationImage(
+                      //         alignment: Alignment.center,
+                      //         image: AssetImage("assets/images/icon.png")),
+                      //   ),
+                      // ),
                       const SizedBox(
                         height: 20,
                       ),
@@ -108,10 +112,7 @@ class _ProfileState extends State<Profile> {
                         margin: const EdgeInsets.only(left: 40),
                         child: Text(
                           'STUDENT DETAILS',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey.shade500,
-                          ),
+                          style: ThemeFontStyle(fontSize: 17, color: Colors.grey.shade400).style
                         ),
                       ),
                       const SizedBox(
@@ -122,7 +123,11 @@ class _ProfileState extends State<Profile> {
                       const SizedBox(
                         height: 10,
                       ),
-                      infoBox(context, 'Full Name', snapshot.data!.name),
+                      infoBox(context, 'First Name', snapshot.data!.name!.split(' ')[0]),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      infoBox(context, 'Last Name', snapshot.data!.name!.split(' ')[1]),
                       const SizedBox(
                         height: 10,
                       ),
@@ -135,11 +140,23 @@ class _ProfileState extends State<Profile> {
                         height: 10,
                       ),
                       infoBox(context, 'Address', snapshot.data!.address),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      infoBox(context, 'Date of Birth', snapshot.data!.dob),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      infoBox(context, 'Year of joining',
+                          snapshot.data!.year_of_joining),
                     ],
                   );
                 }
                 return const CircularProgressIndicator();
               }),
+          const Space(
+            height: 83,
+          ),
         ],
       ),
     );
@@ -154,7 +171,7 @@ class _ProfileState extends State<Profile> {
         color: Colors.grey.shade100,
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
@@ -189,5 +206,4 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-
 }
