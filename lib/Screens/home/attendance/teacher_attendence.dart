@@ -2,10 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sms/Model/attendence.dart';
 import 'package:sms/Services/attendence.dart';
 import 'package:sms/Services/common.dart';
 import 'package:intl/intl.dart';
+
+import '../../styles/font.dart';
 
 class TeacherAttendence extends StatefulWidget {
   const TeacherAttendence({super.key});
@@ -15,6 +18,7 @@ class TeacherAttendence extends StatefulWidget {
 }
 
 class _TeacherAttendenceState extends State<TeacherAttendence> {
+  AttendenceManagement _attendenceManagement = AttendenceManagement();
   String? selectedClass;
   int count = 0;
   bool viewList = false;
@@ -60,18 +64,38 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(
-            height: 40,
+            height: 20,
           ),
-          Center(
-            child: Text(
-              'Upload Attendence',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                color: Colors.blueGrey.shade900,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                // alignment: Alignment.centerLeft,
+                height: 20,
+                width: 20,
+                margin: const EdgeInsets.only(top: 40, left: 20),
+                child: InkWell(
+                  onTap: (() async {
+                    Navigator.pop(context);
+                  }),
+                  child: const Expanded(
+                      child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  )),
+                ),
               ),
-            ),
+              Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.only(top: 40),
+                child: Text(
+                  'Upload Attendence',
+                  style:
+                      ThemeFontStyle(fontSize: 22, color: Colors.black).style,
+                ),
+              ),
+              const Text(''),
+            ],
           ),
           const SizedBox(
             height: 20,
@@ -176,9 +200,9 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
               ElevatedButton(
                 onPressed: (() async {
                   List<StudentList> stdl = <StudentList>[];
-                  stdl=await giveList(selectedClass);
+                  stdl = await giveList(selectedClass);
                   setState(() {
-                    stdList=stdl;
+                    stdList = stdl;
                     viewList = true;
                   });
                 }),
@@ -195,13 +219,44 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
           viewList
               ? Container(
                   decoration: BoxDecoration(
-                    color: Colors.blueAccent.shade100,
+                    color: Colors.blue.shade50,
                   ),
                   height: 400,
-                  child:ListView(
-                                children: stdList
-                                    .map(studentListBuilder)
-                                    .toList()))
+                  child: ListView(
+                      children: stdList.map(studentListBuilder).toList()))
+              : const Spacer(),
+          viewList
+              ? Center(
+                  child: ElevatedButton(
+                    onPressed: (() async {
+                      if (dateInput.text.isNotEmpty) {
+                        String res = await AttendenceManagement()
+                            .submitAttendence(dateInput.text, stdList);
+                        if (res == "Sucessfull") {
+                          Fluttertoast.showToast(
+                              msg: "Attendence Updated.",
+                              backgroundColor: Colors.green.shade300);
+
+                          print("SuccessFull");
+                        } else {
+                          print("error");
+                        }
+                        setState(() {
+                          viewList = false;
+                        });
+                      }
+                      else{
+                        Fluttertoast.showToast(
+                              msg: "Pick date.",
+                              backgroundColor: Colors.red.shade300);
+                      }
+                    }),
+                    child: const Text(
+                      'Submit',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                )
               : const Spacer(),
         ],
       ),

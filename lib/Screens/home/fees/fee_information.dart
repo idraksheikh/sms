@@ -42,13 +42,36 @@ class FeeInformationState extends State<FeeInformation> {
       body: Column(
         children: <Widget>[
           const Space(height: 20,),
-          Container(
-            alignment: Alignment.topCenter,
-            margin: const EdgeInsets.only(top: 40),
-            child: Text(
-              'Fees Information',
-              style: ThemeFontStyle(fontSize: 28, color: Colors.black).style,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                // alignment: Alignment.centerLeft,
+                height: 20,
+                width: 20,
+                margin: const EdgeInsets.only(top: 40, left: 20),
+                child: InkWell(
+                  onTap: (() async {
+                    Navigator.pop(context);
+                  }),
+                  child: const Expanded(
+                      child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  )),
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.only(top: 40),
+                child: Text(
+                  'Fees Information',
+                  style:
+                      ThemeFontStyle(fontSize: 22, color: Colors.black).style,
+                ),
+              ),
+              const Text(''),
+            ],
           ),
           Card(
             margin: const EdgeInsets.only(top: 40),

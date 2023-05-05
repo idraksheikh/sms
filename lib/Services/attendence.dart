@@ -58,7 +58,41 @@ class AttendenceManagement {
       }
     });
 
-   
     return stdList;
+  }
+
+  Future<String> submitAttendence(
+      String date, List<StudentList> stdList) async {
+    try {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      String? registration_id = preferences.getString('registration_id');
+      Attendence classAtt = await FirebaseFirestore.instance
+          .collection('Attendence')
+          .get()
+          .then(((value) => Attendence.fromJson(value.docs[0].data())));
+
+      Dates dates = Dates();
+      if (registration_id != null) {
+        dates.teacher_id = registration_id;
+        dates.attendence = <String, bool>{};
+
+        for (var element in stdList) {
+          dates.attendence!.putIfAbsent(
+              element.studentsRegId ?? 'empty', () => element.present ?? false);
+        }
+        print(date);
+        classAtt.dates!.putIfAbsent(date, () => dates);
+        FirebaseFirestore.instance
+            .collection('Attendence')
+            .doc('class1')
+            .set(classAtt.toJson());
+
+        return "Sucessfull";
+      }
+      return 'error';
+    } catch (e) {
+      print(e.toString());
+      return e.toString();
+    }
   }
 }
