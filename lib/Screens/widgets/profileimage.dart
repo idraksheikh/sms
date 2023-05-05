@@ -41,22 +41,6 @@ class ProfileCard extends StatelessWidget {
                 opacity: 0.8),
 
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              // Text(
-              //     heading,
-              //     style: GoogleFonts.lato(
-              //         textStyle: const TextStyle(
-              //           fontSize: 23,
-              //           fontWeight: FontWeight.bold,
-              //         )
-              //     )
-              // ),
-              // Text(subHeading),
-            ],
-          ),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sms/Screens/styles/font.dart';
 import 'package:sms/Screens/widgets/spacer.dart';
 
 class FeeInformation extends StatefulWidget {
@@ -23,7 +24,7 @@ class FeeInformationState extends State<FeeInformation> {
     // TODO: implement initState
     super.initState();
     setState(() {
-      name = "Gurpreet Singh Bhatia";
+      name = "Manish Pandey";
       admissionFees = 5000;
       cautionFees = 5000;
       busFees = 15000;
@@ -44,17 +45,15 @@ class FeeInformationState extends State<FeeInformation> {
           Container(
             alignment: Alignment.topCenter,
             margin: const EdgeInsets.only(top: 40),
-            child: const Text(
-              'Fees Infomation',
-              style: TextStyle(
-                fontSize: 20,
-              ),
+            child: Text(
+              'Fees Information',
+              style: ThemeFontStyle(fontSize: 28, color: Colors.black).style,
             ),
           ),
           Card(
             margin: const EdgeInsets.only(top: 40),
             color: Colors.white,
-            elevation: 30,
+            elevation: 1,
             shadowColor: Colors.black,
             child: Container(
               height: 600,
@@ -65,21 +64,42 @@ class FeeInformationState extends State<FeeInformation> {
               ),
               child: Column(
                 children: <Widget>[
-                  Container(
-                    height: 80,
-                    width: 80,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/profile.jpg'),
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(50.0))),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Receipt from (School Name)', style: ThemeFontStyle(fontSize: 10).style,),
+                          const Space(
+                            height: 3,
+                          ),
+                          Text('₹50,000/- ', style: ThemeFontStyle(fontSize: 22, color: Colors.black).style,),
+                          const Space(
+                            height: 2,
+                          ),
+                          Text('Last Paid Aug. 7', style: ThemeFontStyle(fontSize: 10).style,),
+                        ],
+                      ),
+                      Container(
+                        height: 80,
+                        width: 80,
+                        decoration: const BoxDecoration(
+                            // image: DecorationImage(
+                            //   image: AssetImage('assets/images/profile.jpg'),
+                            // ),
+                            borderRadius: BorderRadius.all(Radius.circular(50.0))),
+                        child: const Icon(Icons.receipt_long_outlined, size: 60,),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(name!),
+                  Text("Payee Name - ${name!}", style: ThemeFontStyle(fontSize: 12).style,),
                   const SizedBox(
-                    height: 70,
+                    height: 40,
                   ),
                   feeSection(context, "Admission Fees", admissionFees),
                   const SizedBox(
@@ -139,9 +159,9 @@ class FeeInformationState extends State<FeeInformation> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Text(feesType!,textAlign: TextAlign.start,),
+        Text(feesType!,textAlign: TextAlign.start, style: ThemeFontStyle(fontSize: 13, color: Colors.black).style,),
         
-        Text('₹ ${amount!}',textAlign: TextAlign.end,),
+        Text('₹ ${amount!}',textAlign: TextAlign.end, style: ThemeFontStyle(fontSize: 12, color: Colors.grey.shade500).style,),
       ],
     );
   }
