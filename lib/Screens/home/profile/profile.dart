@@ -28,7 +28,7 @@ class _ProfileState extends State<Profile> {
                 // alignment: Alignment.centerLeft,
                 height: 20,
                 width: 20,
-                margin: const EdgeInsets.only(top: 40, left: 20),
+                margin: const EdgeInsets.only(top: 20, left: 20),
                 child: InkWell(
                   onTap: (() async {
                     Navigator.pop(context);
@@ -42,7 +42,7 @@ class _ProfileState extends State<Profile> {
               ),
               Container(
                 alignment: Alignment.center,
-                margin: const EdgeInsets.only(top: 40),
+                margin: const EdgeInsets.only(top: 20),
                 child: Text(
                   'Profile',
                   style: ThemeFontStyle(fontSize: 22, color: Colors.black).style,
@@ -52,7 +52,7 @@ class _ProfileState extends State<Profile> {
                 alignment: Alignment.centerRight,
                 height: 20,
                 width: 20,
-                margin: const EdgeInsets.only(top: 40, right: 20),
+                margin: const EdgeInsets.only(top: 20, right: 20),
                 child: InkWell(
                   onTap: (() async {
                     await _common.logoutStudent();
@@ -66,7 +66,7 @@ class _ProfileState extends State<Profile> {
             ],
           ),
           const SizedBox(
-            height: 40,
+            height: 5,
           ),
           FutureBuilder<Students>(
               future: _common.getStudents(),
@@ -154,9 +154,7 @@ class _ProfileState extends State<Profile> {
                 }
                 return const CircularProgressIndicator();
               }),
-          const Space(
-            height: 83,
-          ),
+          
         ],
       ),
     );
