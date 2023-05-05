@@ -17,26 +17,12 @@ class TeacherAttendence extends StatefulWidget {
 class _TeacherAttendenceState extends State<TeacherAttendence> {
   String? selectedClass;
   int count = 0;
+  bool viewList = false;
   TextEditingController dateInput = TextEditingController();
 
-  List<StudentList> giveList() {
+  Future<List<StudentList>> giveList(String? strd) async {
     List<StudentList> stdl = <StudentList>[];
-    StudentList s1 = StudentList();
-    s1.present=true;
-    s1.studentsRegId="ST202301001";
-    stdl.add(s1);
-    StudentList s2 = StudentList();
-    s2.present=true;
-    s2.studentsRegId="ST202301002";
-    stdl.add(s2);
-    StudentList s3 = StudentList();
-    s3.present=true;
-    s3.studentsRegId="ST202301003";
-    stdl.add(s3);
-    StudentList s4 = StudentList();
-    s4.present=true;
-    s4.studentsRegId="ST202301004";
-    stdl.add(s4);
+    stdl = await AttendenceManagement().getStudentList(strd);
     return stdl;
   }
 
@@ -45,9 +31,6 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
   void initState() {
     dateInput.text = ""; //set the initial value of text field
     super.initState();
-    setState(() {
-      stdList=giveList();
-    });
   }
 
   void updateValue(String val) {
@@ -161,6 +144,12 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
                     //set it true, so that user will not able to edit text
                     onTap: () async {
                       DateTime? pickedDate = await showDatePicker(
+                        selectableDayPredicate: (DateTime date) {
+                          if (date.weekday == DateTime.sunday) {
+                            return false;
+                          }
+                          return true;
+                        },
                         context: context,
                         initialDate: DateTime.now(),
                         firstDate: DateTime.now().subtract(const Duration(
@@ -185,8 +174,13 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
                 width: 40,
               ),
               ElevatedButton(
-                onPressed: (() async{
-                  await AttendenceManagement().getStudentList("1");
+                onPressed: (() async {
+                  List<StudentList> stdl = <StudentList>[];
+                  stdl=await giveList(selectedClass);
+                  setState(() {
+                    stdList=stdl;
+                    viewList = true;
+                  });
                 }),
                 child: const Text(
                   'View Student',
@@ -198,21 +192,26 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
           const SizedBox(
             height: 20,
           ),
-          Container(
-            height: 400,
-            child: ListView(
-              children: stdList.map(studentListBuilder).toList(),
-            )
-            ),
-          
+          viewList
+              ? Container(
+                  decoration: BoxDecoration(
+                    color: Colors.blueAccent.shade100,
+                  ),
+                  height: 400,
+                  child:ListView(
+                                children: stdList
+                                    .map(studentListBuilder)
+                                    .toList()))
+              : const Spacer(),
         ],
       ),
     );
   }
 
- Widget studentListBuilder(StudentList stdl)=> studentListBox(context,stdList.indexOf(stdl), stdl.studentsRegId, stdl.present);
+  Widget studentListBuilder(StudentList stdl) => studentListBox(
+      context, stdList.indexOf(stdl), stdl.studentsRegId, stdl.present);
   Widget studentListBox(
-      BuildContext context,index, String? studRegId, bool? isPresent) {
+      BuildContext context, index, String? studRegId, bool? isPresent) {
     return Container(
       padding: const EdgeInsets.only(left: 20, right: 20),
       height: 30,
@@ -220,7 +219,7 @@ class _TeacherAttendenceState extends State<TeacherAttendence> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text('${index+1}'),
+          Text('${index + 1}'),
           Text(
             studRegId!,
             textAlign: TextAlign.start,
