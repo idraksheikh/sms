@@ -161,7 +161,7 @@ class _CalendarState extends State<Calendar> {
                                         .style,
                                   )));
                             }
-                            if (absentDates[0] ==
+                            if (absentDates[absent] ==
                                 DateTime(
                                     2023, month, index - addMoreDays * 2 + 1)) {
                               absent += 1;
