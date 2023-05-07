@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sms/Model/attendence.dart';
+import 'package:sms/Screens/home/attendance/calendar.dart';
 import 'package:sms/Services/attendence.dart';
 
 import '../../styles/font.dart';
@@ -20,15 +21,34 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-  List weekdays = ['Na', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  List weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  List months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
   int startDay = 1;
   bool check = false;
   int addMoreDays = 0;
   List<DateTime> presentDates = [];
   List<DateTime> absentDates = [];
+
+  // Iterable<DateTime> presentMonthDates = [];
+  // Iterable<DateTime> absentMonthDates = [];
   int present = 0;
-  int month = 4;
+  int month = 5;
   int absent = 0;
+  int? monthDay;
+  Color enabled = Colors.black;
   final AttendenceManagement _attendee = AttendenceManagement();
 
   void getDates() {
@@ -43,12 +63,12 @@ class _CalendarState extends State<Calendar> {
     }
     presentDates.sort((a, b) => a.compareTo(b));
     absentDates.sort((a, b) => a.compareTo(b));
-    print(DateTime.utc(2023, month, 1).weekday);
   }
 
   @override
   void initState() {
     getDates();
+    month = presentDates.first.month;
     super.initState();
   }
 
@@ -63,7 +83,7 @@ class _CalendarState extends State<Calendar> {
                 home: Scaffold(
                   backgroundColor: Colors.white,
                   body: Center(
-                    child: Text("Some error occured"),
+                    child: Text("Some error occurred"),
                   ),
                 ));
           }
@@ -71,6 +91,47 @@ class _CalendarState extends State<Calendar> {
             return Scaffold(
               body: ListView(
                 children: <Widget>[
+                  // Month logic below
+                  Container(
+                    width: widget.width,
+                    height: widget.height * 1 / 20.6,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade700,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              if (presentDates.first.month < month) {
+                                setState(() {
+                                  month -= 1;
+                                });
+                              }
+                            },
+                            icon: const Icon(Icons.arrow_back_ios), color: enabled,),
+
+                        Text(
+                          months[month - 1],
+                          style:
+                              ThemeFontStyle(fontSize: 20, color: Colors.black)
+                                  .style,
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              if (presentDates.last.month > month) {
+                                setState(() {
+                                  month += 1;
+                                });
+                              }
+                            },
+                            icon: const Icon(Icons.arrow_forward_ios_rounded)),
+                      ],
+                    ),
+                  ),
+
+                  // Weekday logic below
                   Container(
                     width: widget.width,
                     height: widget.height * 1 / 20.6,
@@ -91,121 +152,23 @@ class _CalendarState extends State<Calendar> {
                         itemBuilder: (context, index) {
                           return Center(
                               child: Text(
-                            weekdays[DateTime.utc(2023, month, index).weekday],
+                            weekdays[index],
                             style: ThemeFontStyle(
                                     fontSize: 14.5,
                                     height: 0,
                                     color: Colors.black38)
                                 .style,
                           ));
-                          //  AssignmentCard(icon: Icons.picture_as_pdf_outlined, url: pdfData[index]['url'], heading: pdfData[index]['name'],)
                         }),
                   ),
 
                   // Calendar logic below
-                  Container(
-                    width: widget.width,
-                    height: widget.height * 1 / 3.15,
-                    alignment: Alignment.center,
-                    decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [Colors.blue, Colors.white]),
-                        borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(30),
-                            bottomLeft: Radius.circular(30))),
-                    child: GridView.builder(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-                        shrinkWrap: true,
-                        itemCount: DateTime.utc(2023, month, 1).month % 30 == 0
-                            ? 31
-                            : 30 - 2 + DateTime.utc(2023, month, 1).weekday,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 7),
-                        itemBuilder: (context, index) {
-                          if (DateTime.utc(2023, month, index + 1).weekday >
-                                  startDay &&
-                              check == false) {
-                            addMoreDays++;
-                            // startDay = DateTime.utc(2023,6,index+1).weekday;
-                            return Card(
-                                elevation: 1,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12)),
-                                // margin: const EdgeInsets.only(left: 15, right: 15),
-                                child: const Center(child: Text(' ')));
-                          } else {
-                            check = true;
-                            if (presentDates[present] ==
-                                DateTime(
-                                    2023, month, index - addMoreDays * 2 + 1)) {
-                              present += 1;
-                              return Card(
-                                  elevation: 3,
-                                  color: const Color.fromRGBO(254, 58, 144, 1),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12)),
-                                  // margin: const EdgeInsets.only(left: 15, right: 15),
-                                  child: Center(
-                                      child: Text(
-                                    DateTime.utc(2023, month,
-                                            index - addMoreDays * 2 + 1)
-                                        .day
-                                        .toString(),
-                                    style: ThemeFontStyle(
-                                            fontSize: 11,
-                                            color: Colors.white,
-                                            height: 0)
-                                        .style,
-                                  )));
-                            }
-                            if (absentDates[absent] ==
-                                DateTime(
-                                    2023, month, index - addMoreDays * 2 + 1)) {
-                              absent += 1;
-                              return Card(
-                                  elevation: 3,
-                                  color: const Color.fromRGBO(1, 214, 255, 1),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12)),
-                                  // margin: const EdgeInsets.only(left: 15, right: 15),
-                                  child: Center(
-                                      child: Text(
-                                    DateTime.utc(2023, month,
-                                            index - addMoreDays * 2 + 1)
-                                        .day
-                                        .toString(),
-                                    style: ThemeFontStyle(
-                                            fontSize: 11,
-                                            color: Colors.white,
-                                            height: 0)
-                                        .style,
-                                  )));
-                            } else {
-                              return Card(
-                                  elevation: 1,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12)),
-                                  // margin: const EdgeInsets.only(left: 15, right: 15),
-                                  child: Center(
-                                      child: Text(
-                                    DateTime.utc(2023, month,
-                                            index - addMoreDays * 2 + 1)
-                                        .day
-                                        .toString(),
-                                    style: ThemeFontStyle(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.normal,
-                                            height: 0)
-                                        .style,
-                                  )));
-                            }
-                            //  AssignmentCard(icon: Icons.picture_as_pdf_outlined, url: pdfData[index]['url'], heading: pdfData[index]['name'],)
-                          }
-                        }),
-                  ),
+                  CalendarMonth(
+                      height: widget.height,
+                      width: widget.width,
+                      month: month,
+                      presentDates: presentDates,
+                      absentDates: absentDates)
                 ],
               ),
             );
