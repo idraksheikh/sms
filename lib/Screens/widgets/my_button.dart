@@ -4,8 +4,9 @@ import '../styles/font.dart';
 
 class MyButton extends StatelessWidget {
   final Function()? onTap;
+  final String ? text;
 
-  const MyButton({super.key, required this.onTap});
+  const MyButton({super.key, required this.onTap, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +16,12 @@ class MyButton extends StatelessWidget {
         padding: const EdgeInsets.all(25),
         margin: const EdgeInsets.symmetric(horizontal: 25),
         decoration: BoxDecoration(
-          color: Colors.black,
+          color: const Color.fromRGBO(30,166,198,1),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Center(
           child: Text(
-            "Login",
+            '$text',
             style: ThemeFontStyle(fontSize: 16).style,
           ),
         ),

@@ -41,7 +41,20 @@ class LoginPage extends StatelessWidget {
             // mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset('assets/images/background.png'),
+              const SizedBox(
+                height: 40,
+              ),
+              Container(
+                alignment: Alignment.center,
+                height: 150,
+                width: 150,
+                child: const Image(
+                  image: AssetImage('assets/images/login2.png'),
+                ),
+              ),
+                const SizedBox(
+                height: 40,
+              ),
               Expanded(
                 child: ListView(
                   // mainAxisAlignment: MainAxisAlignment.center,
@@ -79,10 +92,12 @@ class LoginPage extends StatelessWidget {
 
                     Center(
                       child: InkWell(
-                        
                           child: Text(
                             "Forget Password ?",
-                            style: ThemeFontStyle(fontSize: 18).style,
+                            style: ThemeFontStyle(
+                              fontSize: 18,
+                              color: const Color.fromRGBO(30, 166, 198, 1),
+                            ).style,
                           ),
                           onTap: () {
                             Navigator.push(
@@ -96,6 +111,7 @@ class LoginPage extends StatelessWidget {
 
                     // sign in button
                     MyButton(
+                      text: "Login",
                       onTap: () {
                         loginSucces(context, usernameController.text,
                             passwordController.text);

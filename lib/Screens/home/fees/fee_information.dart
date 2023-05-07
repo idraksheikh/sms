@@ -54,11 +54,9 @@ class FeeInformationState extends State<FeeInformation> {
                   onTap: (() async {
                     Navigator.pop(context);
                   }),
-                  child: const Expanded(
-                      child: Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
-                  )),
+                  child: const Image(
+                    image: AssetImage('assets/images/leftarrow.png'),
+                  ),
                 ),
               ),
               Container(
