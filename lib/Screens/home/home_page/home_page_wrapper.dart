@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sms/Screens/home/home_page/admin_home_page.dart';
 import 'package:sms/Screens/home/home_page/teacher_home_page.dart';
 import 'package:sms/Services/common.dart';
 
@@ -31,7 +32,10 @@ class _WrapperHomePageState extends State<WrapperHomePage> {
               if (snapshot.data == 'TA') {
                 return const TeacherHomePage();
               }
-              return const TeacherHomePage();
+              if (snapshot.data == 'AD') {
+                return const AdminHomePage();
+              }
+              return const AdminHomePage();
             }
             return const Center(
               child: CircularProgressIndicator(),

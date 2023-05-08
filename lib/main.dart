@@ -90,6 +90,7 @@ class _SMSState extends State<SMS> {
             }
           }
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
               home: Scaffold(
             backgroundColor: Colors.white,
             body: Center(

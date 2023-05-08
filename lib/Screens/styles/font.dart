@@ -10,7 +10,7 @@ class ThemeFontStyle {
   ThemeFontStyle({
     Key? key,
     required this.fontSize,
-    this.color = const Color.fromRGBO(101, 103, 107, 1),
+    this.color = Colors.white,
     this.height = 1,
     this.fontWeight = FontWeight.bold,
   });

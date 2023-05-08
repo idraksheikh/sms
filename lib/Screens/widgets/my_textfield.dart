@@ -53,7 +53,7 @@ class MyTextField extends StatelessWidget {
           fillColor: Colors.grey.shade200,
           filled: true,
           hintText: hintText,
-          hintStyle: ThemeFontStyle(fontSize: 12).style,
+          hintStyle: ThemeFontStyle(fontSize: 12,color: Colors.blueGrey.shade800,).style,
         ),
         //TextStyle(color: Color.fromARGB(255, 14, 12, 12))),
       ),

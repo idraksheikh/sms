@@ -50,7 +50,7 @@ class Common {
     preferences.setString('year_of_joining', students.year_of_joining ?? '');
   }
 
-// Set Teacher After Login...
+  // Set Teacher After Login...
   setTeachers(Teachers? teachrs) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString('address', teachrs!.address ?? '');
@@ -69,6 +69,9 @@ class Common {
     preferences.setString('classes', tempClasses.trimRight());
   }
 
+  // Set Admin After Login...
+
+  
   // Get Student...
   Future<Students> getStudents() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -102,9 +105,11 @@ class Common {
       String tempClasses = preferences.get('classes').toString();
       clsses.addAll(tempClasses.split(" ").toList().map((e) => e));
     }
-    teachers.classes=clsses;
+    teachers.classes = clsses;
     return teachers;
   }
+
+  // Get Admin...
 
   // Logout...
   logoutStudent() async {

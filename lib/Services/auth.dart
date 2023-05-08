@@ -9,7 +9,7 @@ import 'package:sms/Model/teacher.dart';
 import 'package:sms/Services/common.dart';
 
 class Authentication {
-  Common _common=Common();
+  final Common _common=Common();
   Future<bool> login(String registrationId, String password) async {
     try {
       //Registration for Students...
@@ -48,6 +48,7 @@ class Authentication {
           if (teachers.password == password) {
                 await _common.setTeachers(teachers);
             Fluttertoast.showToast(msg: "Login Successfull");
+
             return true;
           } else {
             Fluttertoast.showToast(msg: "Wrong Password.");
@@ -70,8 +71,9 @@ class Authentication {
           if (admins.password == password) {
             SharedPreferences preference =
                 await SharedPreferences.getInstance();
-            preference.setString('registrationId', admins.registration_id!);
+            preference.setString('registration_id', admins.registration_id!);
             preference.setString('password', admins.password!);
+            print('1');
             Fluttertoast.showToast(msg: "Login Successfull");
             return true;
           } else {
@@ -79,9 +81,11 @@ class Authentication {
             return false;
           }
         }
+        
         Fluttertoast.showToast(msg: "Admin not found.");
         return false;
       }
+      print('2');
       Fluttertoast.showToast(msg: "Not Done.");
       return false;
     } catch (e) {

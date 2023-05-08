@@ -22,7 +22,7 @@ class ThemeFont extends StatelessWidget {
           fontSize: fontSize,
           fontWeight: fontWeight,
           fontFamily: 'Oswald',
-          color: const Color.fromRGBO(101, 103, 107, 1),
+          color: const Color.fromRGBO(30,166,198,1),
         ),
       ),
     );
