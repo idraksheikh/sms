@@ -16,7 +16,7 @@ class TeacherHomePage extends StatefulWidget {
 }
 
 class _TeacherHomePageState extends State<TeacherHomePage> {
-  Common _common = Common();
+  final Common _common = Common();
   String? name = ' ';
 
   void getName() async {
@@ -179,6 +179,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
     );
   }
 
+  
   Widget infoBox(BuildContext context, String? infokey, String? infovalue) {
     return Container(
       height: 60,
@@ -204,7 +205,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                   alignment: Alignment.topLeft,
                   margin: const EdgeInsets.only(left: 10),
                   child:
-                      Text(infokey!, style: ThemeFontStyle(fontSize: 12).style),
+                      Text(infokey!, style: ThemeFontStyle(fontSize: 12,color: const Color.fromARGB(255, 7, 0, 0)).style),
                 ),
                 const SizedBox(
                   height: 5,
@@ -215,7 +216,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                   child: Text(
                     infovalue!,
                     style: ThemeFontStyle(
-                            fontSize: 14, fontWeight: FontWeight.normal)
+                            fontSize: 14, fontWeight: FontWeight.normal,color: const Color.fromARGB(255, 7, 0, 0))
                         .style,
                   ),
                 ),
@@ -226,4 +227,4 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
             ),
     );
   }
-}
+  }

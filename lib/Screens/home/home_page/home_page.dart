@@ -151,12 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  // const Cards(
-                                  //   routeName: '/form',
-                                  //   imgSrc: 'form.jpg',
-                                  //   heading: 'Form',
-                                  //   subHeading: 'Student Entry Form',
-                                  // ),
+                               
                                   SizedBox(
                                     width: MediaQuery.of(context).size.width *
                                         0.025,
@@ -187,13 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     width: MediaQuery.of(context).size.width *
                                         0.025,
                                   ),
-                                  // const Cards(
-                                  //   // routeName: '/form',
-                                  //   imgSrc: 'attendance_2.jpg',
-                                  //   heading: 'Dummy',
-                                  //   subHeading: 'View current assignments',
-                                  //   routeName: '/attendance_data',
-                                  // ),
+                               
                                 ]),
                           ]),
                     ],

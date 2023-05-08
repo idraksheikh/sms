@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sms/Model/Admin.dart';
 import 'package:sms/Model/student.dart';
 
 import '../Model/teacher.dart';
@@ -70,8 +71,12 @@ class Common {
   }
 
   // Set Admin After Login...
+  setAdmins(Admins? admins) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('registration_id', admins!.registration_id ?? '');
+    preferences.setString('name', admins.name ?? '');
+  }
 
-  
   // Get Student...
   Future<Students> getStudents() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -110,6 +115,15 @@ class Common {
   }
 
   // Get Admin...
+  Future<Admins> getAdmins() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    Admins admins = Admins();
+
+    admins.registration_id = preferences.getString('registration_id');
+    admins.name = preferences.getString('name');
+    
+    return admins;
+  }
 
   // Logout...
   logoutStudent() async {

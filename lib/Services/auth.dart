@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms/Model/Admin.dart';
 import 'package:sms/Model/student.dart';
 import 'package:sms/Model/teacher.dart';
@@ -32,7 +31,6 @@ class Authentication {
         Fluttertoast.showToast(msg: "Student not found.");
         return false;
       }
-
       //Registration for Teachers...
       if (registrationId.startsWith('TA')) {
         Teachers? teachers = await FirebaseFirestore.instance
@@ -67,11 +65,7 @@ class Authentication {
                 : null);
         if (admins != null) {
           if (admins.password == password) {
-            SharedPreferences preference =
-                await SharedPreferences.getInstance();
-            preference.setString('registration_id', admins.registration_id!);
-            preference.setString('password', admins.password!);
-            print('1');
+            _common.setAdmins(admins);
             Fluttertoast.showToast(msg: "Login Successfull");
             return true;
           } else {
@@ -83,7 +77,7 @@ class Authentication {
         Fluttertoast.showToast(msg: "Admin not found.");
         return false;
       }
-      print('2');
+      
       Fluttertoast.showToast(msg: "Not Done.");
       return false;
     } catch (e) {
