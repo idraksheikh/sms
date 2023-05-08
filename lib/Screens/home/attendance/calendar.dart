@@ -112,6 +112,7 @@ class _CalendarMonthState extends State<CalendarMonth> {
                       style: ThemeFontStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.normal,
+                              color: Colors.black,
                               height: 0)
                           .style,
                     )));
