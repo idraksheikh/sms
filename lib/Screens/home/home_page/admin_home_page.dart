@@ -32,7 +32,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
               children: [
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(
-                    'Welcome, Gurpreet',
+                    'Welcome,',
                     style: GoogleFonts.lato(
                       textStyle: const TextStyle(
                         fontSize: 16,
@@ -116,7 +116,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
               imgSrc: 'student.jpg',
               heading: 'Student',
               subHeading: 'Add Student',
-              routeName: 'feeInfo',
+              routeName: '/add_student',
             ),
           ]),
           SizedBox(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sms/Screens/home/adminpages/addstudent.dart';
 import 'package:sms/Screens/home/assigments/assignment_class_folder.dart';
 import 'package:sms/Screens/home/assigments/student_assignment_upload.dart';
 import 'package:sms/Screens/home/attendance/attendance_model.dart';
@@ -68,6 +69,7 @@ class _SMSState extends State<SMS> {
                   '/student_upload' : (context) => const StudentAssignmentUpload(),
                   '/wrapper': (context) => const Wrapper(),
                   '/teacher_attendance':(context) => const TeacherAttendence(),
+                  '/add_student':(context) => const AddStudent(),
                 },
               );
             } else {
@@ -85,6 +87,7 @@ class _SMSState extends State<SMS> {
                   '/attendance_data': (context) => const UserInformation(),
                   '/wrapper': (context) => const Wrapper(),
                   '/teacher_attendance':(context) => const TeacherAttendence(),
+                  '/add_student':(context) => const AddStudent(),
                 },
               );
             }
